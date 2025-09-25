@@ -1,0 +1,57 @@
+name: Release on tag
+on:
+  push:
+    tags: ["vision-v*"]
+
+permissions:
+  contents: write
+
+jobs:
+  release:
+    runs-on: macos-14
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Build VisionDaemon (release, arm64)
+        working-directory: vision/visiond-swift
+        run: |
+          BIN_DIR=$(swift build -c release --arch arm64 --show-bin-path)
+          echo "BIN_DIR=$BIN_DIR" >> $GITHUB_ENV
+          ls -la "$BIN_DIR"
+
+      - name: Package artifact
+        run: |
+          mkdir -p "$RUNNER_TEMP/pkg"
+          cp "$BIN_DIR/VisionDaemon" "$RUNNER_TEMP/pkg/VisionDaemon"
+          cd "$RUNNER_TEMP/pkg"
+          /usr/bin/zip -9 -r VisionDaemon-macos-arm64.zip VisionDaemon
+          echo "PKG=$RUNNER_TEMP/pkg/VisionDaemon-macos-arm64.zip" >> $GITHUB_ENV
+
+      - name: Generate SHA-256 checksum
+        run: |
+          cd "$(dirname "$PKG")"
+          shasum -a 256 "$(basename "$PKG")" > "$(basename "$PKG").sha256"
+          cat "$(basename "$PKG").sha256"
+
+      - name: Verify checksum before upload
+        run: |
+          cd "$(dirname "$PKG")"
+          EXPECTED=$(cut -d' ' -f1 "$(basename "$PKG").sha256")
+          ACTUAL=$(shasum -a 256 "$(basename "$PKG")" | awk '{print $1}')
+          if [ "$EXPECTED" != "$ACTUAL" ]; then
+            echo "Checksum mismatch: expected $EXPECTED, got $ACTUAL" >&2
+            exit 1
+          fi
+
+      - name: Publish GitHub Release
+        uses: softprops/action-gh-release@v2
+        if: startsWith(github.ref, 'refs/tags/')
+        with:
+          files: |
+            ${{ env.PKG }}
+            ${{ env.PKG }}.sha256
+          generate_release_notes: true
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
