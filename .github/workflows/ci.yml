@@ -30,6 +30,12 @@ jobs:
       - name: Syntax check (compileall)
         run: |
           python -m compileall -q vision/parserd
+      - name: Install test deps
+        run: |
+          pip install pytest jsonpatch jsonschema rapidfuzz
+      - name: pytest
+        working-directory: vision/parserd
+        run: pytest -q
       - name: Schema validation
         run: |
           python vision/scripts/validate_schemas.py
