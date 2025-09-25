@@ -30,6 +30,9 @@ jobs:
       - name: Syntax check (compileall)
         run: |
           python -m compileall -q vision/parserd
+      - name: Schema validation
+        run: |
+          python vision/scripts/validate_schemas.py
 
   node:
     name: Node install (dom-bridge)
@@ -53,4 +56,3 @@ jobs:
       - name: Build
         working-directory: vision/visiond-swift
         run: swift build -c release
-

@@ -1,9 +1,0 @@
-#!/usr/bin/env bash
-set -euo pipefail
-
-SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
-PKG_DIR="${SCRIPT_DIR}/.."
-
-export SWIFT_EXECUTABLE_NAME=VisionDaemon
-exec swift run -c release --package-path "$PKG_DIR" "$SWIFT_EXECUTABLE_NAME" "$@"
-

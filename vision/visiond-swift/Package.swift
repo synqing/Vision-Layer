@@ -21,6 +21,11 @@ let package = Package(
             swiftSettings: [
                 .unsafeFlags(["-parse-as-library"])
             ]
+        ),
+        .testTarget(
+            name: "VisionDaemonTests",
+            dependencies: ["VisionDaemon"],
+            path: "Tests/VisionDaemonTests"
         )
     ]
 )

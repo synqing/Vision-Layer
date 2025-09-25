@@ -31,6 +31,7 @@ vision/**/.cache/
 # Swift/Build artifacts
 vision/visiond-swift/.build/
 vision/visiond-swift/.swiftpm/
+vision/visiond-swift/bin/
 
 # Python build/cache
 **/__pycache__/
