@@ -1,0 +1,41 @@
+name: Release (VisionDaemon)
+on:
+  push:
+    tags:
+      - "vision-v*"
+
+jobs:
+  build-macos-arm64:
+    runs-on: macos-14
+    permissions:
+      contents: read
+      actions: write
+    defaults:
+      run:
+        working-directory: vision/visiond-swift
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Swift build (release, arm64)
+        run: |
+          swift --version
+          BIN_DIR=$(swift build -c release --arch arm64 --show-bin-path)
+          echo "BIN_DIR=$BIN_DIR" >> $GITHUB_ENV
+          ls -la "$BIN_DIR"
+
+      - name: Package artifact
+        run: |
+          mkdir -p "$RUNNER_TEMP/pkg"
+          cp "$BIN_DIR/VisionDaemon" "$RUNNER_TEMP/pkg/VisionDaemon"
+          cd "$RUNNER_TEMP/pkg"
+          /usr/bin/zip -9 -r VisionDaemon-macos-arm64.zip VisionDaemon
+          echo "PKG_PATH=$RUNNER_TEMP/pkg/VisionDaemon-macos-arm64.zip" >> $GITHUB_ENV
+
+      - name: Upload artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: VisionDaemon-macos-arm64
+          path: ${{ env.PKG_PATH }}
+          if-no-files-found: error
+          retention-days: 14
+

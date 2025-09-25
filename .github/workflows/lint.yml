@@ -1,0 +1,37 @@
+name: Lint (non-blocking)
+on:
+  pull_request:
+  push:
+    branches: [ main ]
+
+jobs:
+  ruff:
+    runs-on: ubuntu-latest
+    continue-on-error: true
+    defaults:
+      run:
+        working-directory: vision/parserd
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with: { python-version: "3.11" }
+      - name: Install ruff
+        run: pipx install ruff
+      - name: Run ruff
+        run: ruff check .
+
+  eslint:
+    runs-on: ubuntu-latest
+    continue-on-error: true
+    defaults:
+      run:
+        working-directory: vision/dom-bridge
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with: { node-version: "20" }
+      - name: Install deps
+        run: npm ci
+      - name: Run eslint
+        run: npx eslint .
+

@@ -1,0 +1,12 @@
+version: 2
+updates:
+  - package-ecosystem: "npm"
+    directory: "/vision/dom-bridge"
+    schedule: { interval: "weekly" }
+  - package-ecosystem: "pip"
+    directory: "/vision/parserd"
+    schedule: { interval: "weekly" }
+  - package-ecosystem: "swift"
+    directory: "/vision/visiond-swift"
+    schedule: { interval: "weekly" }
+
