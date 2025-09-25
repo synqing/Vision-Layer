@@ -150,6 +150,7 @@ final class HTTPHandler: ChannelInboundHandler {
                 "pane": paneId,
                 "capture_latency_ms": captureLatency,
                 "locate_latency_ms": captureResult.locateLatencyMs,
+                "map_crop_latency_ms": captureResult.mapCropLatencyMs ?? -1,
                 "ocr_engine": engine,
                 "ocr_tokens": ocrTokens.count
             ])
@@ -164,6 +165,7 @@ final class HTTPHandler: ChannelInboundHandler {
                     "tokens": ocrTokens.map { $0.json }
                 ]
             ]
+            if let mapMs = captureResult.mapCropLatencyMs { response["map_crop_latency_ms"] = mapMs }
             if let image = captureResult.image, let imageDict = Self.encodeImage(image) {
                 response["image"] = imageDict
             }

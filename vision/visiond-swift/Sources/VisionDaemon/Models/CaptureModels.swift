@@ -21,6 +21,7 @@ struct PaneCaptureResult {
     let timestamp: Date
     let locateLatencyMs: Int
     let captureLatencyMs: Int
+    let mapCropLatencyMs: Int?
     let sensors: [SensorReading]
     let image: CGImage?
     let metadata: FrameMetadata
