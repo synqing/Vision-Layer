@@ -11,7 +11,7 @@
     "health": "node -e \"fetch('http://127.0.0.1:'+(process.env.DOM_BRIDGE_PORT||4321)+'/healthz').then(r=>r.text()).then(console.log)\""
   },
   "dependencies": {
-    "dotenv": "^16.4.5",
+    "dotenv": "^17.2.2",
     "express": "^4.19.2",
     "morgan": "^1.10.0",
     "playwright": "^1.49.0"
