@@ -1,0 +1,13 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "type": "object",
+  "required": ["ts","pane","delta","confidence"],
+  "properties": {
+    "ts":   {"type":"string","format":"date-time"},
+    "pane": {"enum":["CI_SUMMARY","CI_LOGS_DETAIL","CHECKS_LIST","PR_BANNER","PR_DIFF_SUMMARY","PR_THREAD_SUMMARY","IDE_PROBLEMS","IDE_TERMINAL","BUILD_ARTIFACTS_CONSOLE","HIL_CHART","HIL_LOGS","SERIAL_MONITOR","LOGIC_ANALYZER","LED_CAMERA_MONITOR"]},
+    "delta":{"type":"array"},
+    "confidence":{"type":"number","minimum":0,"maximum":1}
+  },
+  "additionalProperties": false
+}
+

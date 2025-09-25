@@ -1,0 +1,5 @@
+aiohttp==3.9.5
+jsonschema==4.23.0
+jsonpatch==1.33
+rapidfuzz==3.9.6
+ujson==5.10.0

@@ -1,0 +1,157 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "type": "object",
+  "properties": {
+    "ci": {
+      "type": "object",
+      "properties": {
+        "status": {"type": "string", "enum": ["passing","failing","queued","running"]},
+        "checks_total": {"type": "integer", "minimum": 0, "maximum": 1000},
+        "checks_failed": {"type": "integer", "minimum": 0, "maximum": 1000},
+        "failed_names": {
+          "type": "array",
+          "maxItems": 8,
+          "items": {"type": "string"}
+        }
+      },
+      "required": ["status"],
+      "additionalProperties": false
+    },
+    "checks": {
+      "type": "array",
+      "maxItems": 10,
+      "items": {
+        "type": "object",
+        "properties": {
+          "name": {"type": "string"},
+          "status": {"type": "string", "enum": ["success","failure","queued","in_progress","unknown"]},
+          "duration_s": {"type": ["number","null"], "minimum": 0},
+          "url": {"type": ["string","null"], "format": "uri"}
+        },
+        "required": ["name","status"],
+        "additionalProperties": false
+      }
+    },
+    "pr": {
+      "type": "object",
+      "properties": {
+        "mergeable": {"type": "string", "enum": ["clean","blocked","dirty"]},
+        "required_reviews": {"type": "integer", "minimum": 0, "maximum": 10},
+        "labels": {"type": "array", "maxItems": 16, "items": {"type": "string"}}
+      },
+      "additionalProperties": false
+    },
+    "diff": {
+      "type": "object",
+      "properties": {
+        "files_changed": {"type": "integer", "minimum": 0},
+        "insertions": {"type": "integer", "minimum": 0},
+        "deletions": {"type": "integer", "minimum": 0},
+        "risk": {"type": "string", "enum": ["low","med","high"]}
+      },
+      "additionalProperties": false
+    },
+    "threads": {
+      "type": "object",
+      "properties": {
+        "unresolved_count": {"type": "integer", "minimum": 0},
+        "requested_reviewers": {"type": "array", "maxItems": 8, "items": {"type": "string"}}
+      },
+      "additionalProperties": false
+    },
+    "ide": {
+      "type": "object",
+      "properties": {
+        "top_error": {
+          "type": "object",
+          "properties": {
+            "file": {"type": "string"},
+            "line": {"type": "integer", "minimum": 1},
+            "msg": {"type": "string"}
+          },
+          "required": ["file","line","msg"],
+          "additionalProperties": false
+        }
+      },
+      "additionalProperties": false
+    },
+    "terminal": {
+      "type": "object",
+      "properties": {
+        "warnings": {"type": "integer", "minimum": 0},
+        "errors": {"type": "integer", "minimum": 0},
+        "last_target": {"type": "string"},
+        "build_time_s": {"type": ["number","integer"], "minimum": 0}
+      },
+      "additionalProperties": false
+    },
+    "artifacts": {
+      "type": "object",
+      "properties": {
+        "items": {
+          "type": "array",
+          "maxItems": 12,
+          "items": {
+            "type": "object",
+            "properties": {
+              "name": {"type": "string"},
+              "size_bytes": {"type": ["integer","null"], "minimum": 0},
+              "ready": {"type": ["boolean","null"]}
+            },
+            "required": ["name"],
+            "additionalProperties": false
+          }
+        }
+      },
+      "additionalProperties": false
+    },
+    "hil": {
+      "type": "object",
+      "properties": {
+        "fps_avg": {"type": "number", "minimum": 0},
+        "fps_p95": {"type": "number", "minimum": 0},
+        "drops_pct": {"type": "number", "minimum": 0, "maximum": 100},
+        "sync_offset_ms": {"type": "number"}
+      },
+      "additionalProperties": false
+    },
+    "hil_logs": {
+      "type": "object",
+      "properties": {
+        "last_event": {"type": "string"},
+        "last_error_signature": {"type": "string"},
+        "uptime_s": {"type": ["integer","number"]}
+      },
+      "additionalProperties": false
+    },
+    "serial": {
+      "type": "object",
+      "properties": {
+        "port": {"type": "string"},
+        "connected": {"type": "boolean"},
+        "last_line": {"type": "string"},
+        "error_count": {"type": "integer", "minimum": 0}
+      },
+      "additionalProperties": false
+    },
+    "logic": {
+      "type": "object",
+      "properties": {
+        "detected_edges": {"type": "integer", "minimum": 0},
+        "period_us": {"type": "number", "minimum": 0},
+        "duty_pct": {"type": "number", "minimum": 0, "maximum": 100}
+      },
+      "additionalProperties": false
+    },
+    "camera": {
+      "type": "object",
+      "properties": {
+        "frame_brightness": {"type": ["number","null"], "minimum": 0, "maximum": 1},
+        "dominant_hue_deg": {"type": ["number","null"], "minimum": 0, "maximum": 360},
+        "flicker_hz": {"type": ["number","null"], "minimum": 0}
+      },
+      "additionalProperties": false
+    }
+  },
+  "additionalProperties": false
+}

@@ -1,0 +1,49 @@
+# See https://git-scm.com/docs/gitignore for details
+
+# Dependencies
+node_modules/
+.pnpm-store/
+venv/
+vision/**/.venv/
+.env
+.env.*
+
+# OS / Editor
+.DS_Store
+*.swp
+.idea/
+.vscode/*
+!.vscode/extensions.json
+!.vscode/settings.json
+
+# Build outputs
+dist/
+build/
+coverage/
+*.log
+
+# Playwright/Chromium user data and caches
+vision/dom-bridge/user-data/
+vision/dom-bridge/.cache/
+vision/**/user-data/
+vision/**/.cache/
+
+# Swift/Build artifacts
+vision/visiond-swift/.build/
+vision/visiond-swift/.swiftpm/
+
+# Python build/cache
+**/__pycache__/
+**/*.pyc
+
+# Logs
+*.log
+logs/
+
+# Misc large caches
+**/*.zip
+**/*.tar
+**/*.tar.gz
+
+# Do not commit embedded repos checked out under build dirs
+vision/visiond-swift/.build/checkouts/

@@ -1,0 +1,134 @@
+{
+  "CI_SUMMARY": {
+    "mode": "dom",
+    "app": "com.apple.Safari",
+    "dom": {
+      "url_contains": "github.com",
+      "locator": "[data-test-selector='overall-checks-summary']"
+    },
+    "pixel_offset": { "dx": 0, "dy": 0, "w": 420, "h": 220 },
+    "multi_read_n": 2
+  },
+  "CHECKS_LIST": {
+    "mode": "dom",
+    "app": "com.apple.Safari",
+    "dom": {
+      "url_contains": "github.com",
+      "locator": "[data-test-selector='checks-list-item']"
+    },
+    "pixel_offset": { "dx": 0, "dy": 0, "w": 640, "h": 800 },
+    "multi_read_n": 2
+  },
+  "CI_LOGS_DETAIL": {
+    "mode": "dom",
+    "app": "com.apple.Safari",
+    "dom": {
+      "url_contains": "github.com",
+      "locator": "[data-test-selector='logs-pane']"
+    },
+    "pixel_offset": { "dx": 0, "dy": 0, "w": 1200, "h": 600 },
+    "multi_read_n": 3
+  },
+  "PR_BANNER": {
+    "mode": "dom",
+    "app": "com.apple.Safari",
+    "dom": {
+      "url_contains": "github.com",
+      "locator": "[data-test-selector='pr-header-details']"
+    },
+    "pixel_offset": { "dx": 0, "dy": 0, "w": 1200, "h": 220 },
+    "multi_read_n": 2
+  },
+  "PR_DIFF_SUMMARY": {
+    "mode": "dom",
+    "app": "com.apple.Safari",
+    "dom": {
+      "url_contains": "github.com",
+      "locator": "[data-test-selector='diff-stats']"
+    },
+    "pixel_offset": { "dx": 0, "dy": 0, "w": 1200, "h": 220 },
+    "multi_read_n": 2
+  },
+  "PR_THREAD_SUMMARY": {
+    "mode": "dom",
+    "app": "com.apple.Safari",
+    "dom": {
+      "url_contains": "github.com",
+      "locator": "[data-test-selector='review-thread-summary']"
+    },
+    "pixel_offset": { "dx": 0, "dy": 0, "w": 1200, "h": 260 },
+    "multi_read_n": 2
+  },
+  "IDE_PROBLEMS": {
+    "mode": "ax",
+    "app": "com.apple.dt.Xcode",
+    "ax": {
+      "role": "AXTable",
+      "title_contains": "Issues"
+    },
+    "multi_read_n": 2
+  },
+  "IDE_TERMINAL": {
+    "mode": "ax",
+    "app": "com.apple.Terminal",
+    "ax": {
+      "role": "AXScrollArea",
+      "title_contains": "Terminal"
+    },
+    "multi_read_n": 3
+  },
+  "BUILD_ARTIFACTS_CONSOLE": {
+    "mode": "ax",
+    "app": "com.microsoft.VSCode",
+    "ax": {
+      "role": "AXTable",
+      "title_contains": "Artifacts"
+    },
+    "multi_read_n": 2
+  },
+  "HIL_CHART": {
+    "mode": "pixel",
+    "app": "com.hil.dashboard",
+    "pixel": {
+      "window_title_contains": "HIL Dashboard",
+      "roi": { "x": 180, "y": 80, "w": 1200, "h": 400 }
+    },
+    "multi_read_n": 2
+  },
+  "HIL_LOGS": {
+    "mode": "pixel",
+    "app": "com.hil.dashboard",
+    "pixel": {
+      "window_title_contains": "HIL Dashboard",
+      "roi": { "x": 180, "y": 520, "w": 1200, "h": 560 }
+    },
+    "multi_read_n": 3
+  },
+  "SERIAL_MONITOR": {
+    "mode": "ax",
+    "app": "com.arduino.ArduinoIDE2",
+    "ax": {
+      "role": "AXTextArea",
+      "title_contains": "Serial Monitor"
+    },
+    "multi_read_n": 2
+  },
+  "LOGIC_ANALYZER": {
+    "mode": "pixel",
+    "app": "com.logic.app",
+    "pixel": {
+      "window_title_contains": "Logic Analyzer",
+      "roi": { "x": 0, "y": 0, "w": 1400, "h": 900 }
+    },
+    "multi_read_n": 2
+  },
+  "LED_CAMERA_MONITOR": {
+    "mode": "pixel",
+    "app": "com.camera.monitor",
+    "pixel": {
+      "window_title_contains": "Camera Monitor",
+      "roi": { "x": 0, "y": 0, "w": 800, "h": 600 }
+    },
+    "multi_read_n": 2
+  }
+}

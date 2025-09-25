@@ -1,0 +1,79 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "type": "object",
+  "patternProperties": {
+    "^[A-Z0-9_]+$": {
+      "type": "object",
+      "required": ["mode", "app"],
+      "properties": {
+        "mode": { "type": "string", "enum": ["ax", "dom", "pixel"] },
+        "app": { "type": "string", "minLength": 1 },
+        "dom": {
+          "type": "object",
+          "properties": {
+            "url_contains": { "type": "string" },
+            "locator": { "type": "string" }
+          },
+          "required": ["locator"],
+          "additionalProperties": false
+        },
+        "ax": {
+          "type": "object",
+          "properties": {
+            "role": { "type": "string" },
+            "title_contains": { "type": "string" },
+            "index": { "type": "integer", "minimum": 0 }
+          },
+          "minProperties": 1,
+          "additionalProperties": false
+        },
+        "pixel": {
+          "type": "object",
+          "required": ["window_title_contains", "roi"],
+          "properties": {
+            "window_title_contains": { "type": "string", "minLength": 1 },
+            "roi": {
+              "type": "object",
+              "required": ["x", "y", "w", "h"],
+              "properties": {
+                "x": { "type": "integer" },
+                "y": { "type": "integer" },
+                "w": { "type": "integer", "minimum": 1 },
+                "h": { "type": "integer", "minimum": 1 }
+              },
+              "additionalProperties": false
+            }
+          },
+          "additionalProperties": false
+        },
+        "pixel_offset": {
+          "type": "object",
+          "properties": {
+            "dx": { "type": "integer" },
+            "dy": { "type": "integer" },
+            "w": { "type": "integer", "minimum": 1 },
+            "h": { "type": "integer", "minimum": 1 }
+          },
+          "additionalProperties": false
+        },
+        "multi_read_n": { "type": "integer", "minimum": 1, "maximum": 5 }
+      },
+      "allOf": [
+        {
+          "if": { "properties": { "mode": { "const": "dom" } } },
+          "then": { "required": ["dom"] }
+        },
+        {
+          "if": { "properties": { "mode": { "const": "ax" } } },
+          "then": { "required": ["ax"] }
+        },
+        {
+          "if": { "properties": { "mode": { "const": "pixel" } } },
+          "then": { "required": ["pixel"] }
+        }
+      ],
+      "additionalProperties": false
+    }
+  },
+  "additionalProperties": false
+}

@@ -1,0 +1,31 @@
+{
+  "bind_port": 8765,
+  "stream": {
+    "default_fps": 2,
+    "max_frames_in_flight": 3
+  },
+  "screenshot": {
+    "enabled": true,
+    "cooldown_ms": 750
+  },
+  "ocr": {
+    "languages": ["en-US"],
+    "fallback": false,
+    "fallback_engine": "tesseract",
+    "fallback_language": "eng",
+    "min_confidence_primary": 0.9,
+    "min_text_height_px": 10
+  },
+  "sensors": {
+    "ax_poll_interval_ms": 500,
+    "dom_poll_interval_ms": 1000,
+    "dom_browser": "chromium",
+    "playwright_launch_args": ["--disable-dev-shm-usage"]
+  },
+  "hashing": {
+    "enabled": true,
+    "mode": "dhash",
+    "bits": 64
+  },
+  "throttle_ms": 0
+}
