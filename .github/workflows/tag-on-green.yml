@@ -1,0 +1,50 @@
+name: Tag on Green
+
+on:
+  workflow_run:
+    workflows: ["CI"]
+    types: [completed]
+
+permissions:
+  contents: write
+
+jobs:
+  tag_release:
+    if: ${{ github.event.workflow_run.conclusion == 'success' && github.event.workflow_run.head_branch == 'main' }}
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Configure git user
+        run: |
+          git config user.name "vision-layer-ci"
+          git config user.email "vision-layer-ci@users.noreply.github.com"
+
+      - name: Compute next tag
+        id: version
+        run: |
+          latest=$(git tag --list 'vision-v*' | sort -V | tail -n1)
+          if [ -z "$latest" ]; then
+            next="vision-v0.1.0"
+          else
+            base=${latest#vision-v}
+            IFS='.' read -r major minor patch <<EOF
+$base
+EOF
+            patch=$((patch+1))
+            next="vision-v${major}.${minor}.${patch}"
+          fi
+          echo "next_tag=$next" >> "$GITHUB_OUTPUT"
+
+      - name: Create and push tag
+        run: |
+          tag="${{ steps.version.outputs.next_tag }}"
+          if git rev-parse "$tag" >/dev/null 2>&1; then
+            echo "Tag $tag already exists. Skipping."
+            exit 0
+          fi
+          git tag -a "$tag" -m "$tag"
+          git push origin "$tag"
